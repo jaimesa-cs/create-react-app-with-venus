@@ -1,27 +1,25 @@
-import "./App.css";
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { Button } from "@contentstack/venus-components";
-import logo from "./logo.svg";
+/**
+ * All the routes are Lazy loaded.
+ * This will ensure the bundle contains only the core code and respective route bundle
+ */
+const CustomFieldExtension = React.lazy(() => import("./routes/CustomField.js"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Button>I am a venus button!</Button>
-        {/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<div>Nothing to show here</div>} />
+      <Route
+        path="/custom-field"
+        element={
+          <Suspense>
+            <CustomFieldExtension />
+          </Suspense>
+        }
+      />
+    </Routes>
   );
 }
 
